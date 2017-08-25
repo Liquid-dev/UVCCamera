@@ -582,6 +582,8 @@ static int parse_configuration(struct libusb_context *ctx,
 		int len;
 		unsigned char *begin;
 
+		memset(&header, 0, sizeof(struct usb_descriptor_header));
+
 		/* Skip over the rest of the Class Specific or Vendor Specific descriptors */
 		begin = buffer;
 		while (size >= LIBUSB_DT_HEADER_SIZE/*DESC_HEADER_LENGTH*/) {

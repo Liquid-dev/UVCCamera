@@ -608,7 +608,7 @@ static int test_hid(libusb_device_handle *handle, uint8_t endpoint_in)
 
 	printf("\nReading HID Report Descriptors:\n");
 	descriptor_size = libusb_control_transfer(handle, LIBUSB_ENDPOINT_IN|LIBUSB_REQUEST_TYPE_STANDARD|LIBUSB_RECIPIENT_INTERFACE,
-		LIBUSB_REQUEST_GET_DESCRIPTOR, LIBUSB_DT_REPORT<<8, 0, hid_report_descriptor, sizeof(hid_report_descriptor), 1000);
+		LIBUSB_REQUEST_GET_DESCRIPTOR, LIBUSB_DT_HID_REPORT <<8, 0, hid_report_descriptor, sizeof(hid_report_descriptor), 1000);
 	if (descriptor_size < 0) {
 		printf("   Failed\n");
 		return -1;

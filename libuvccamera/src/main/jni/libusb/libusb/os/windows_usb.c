@@ -2296,12 +2296,18 @@ const struct usbi_os_backend windows_backend = {
 	"Windows",
 	USBI_CAP_HAS_HID_ACCESS,
 	windows_init,
+	NULL, /* init2 */
 	windows_exit,
 
 	windows_get_device_list,
 	NULL,				/* hotplug_poll */
 	windows_open,
+	NULL, /* set_device_fd */
 	windows_close,
+
+#ifdef ACCESS_RAW_DESCRIPTORS
+	NULL, /* get_raw_descriptor */
+#endif
 
 	windows_get_device_descriptor,
 	windows_get_active_config_descriptor,
@@ -2316,6 +2322,9 @@ const struct usbi_os_backend windows_backend = {
 	windows_set_interface_altsetting,
 	windows_clear_halt,
 	windows_reset_device,
+
+	NULL, /* alloc_streams */
+	NULL, /* free_streams */
 
 	windows_kernel_driver_active,
 	windows_detach_kernel_driver,
@@ -3339,7 +3348,7 @@ static int _hid_get_hid_descriptor(struct hid_device_priv* dev, void *data, size
 	d.bcdHID = 0x0110; /* 1.10 */
 	d.bCountryCode = 0;
 	d.bNumDescriptors = 1;
-	d.bClassDescriptorType = LIBUSB_DT_REPORT;
+	d.bClassDescriptorType = LIBUSB_DT_HID_REPORT;
 	d.wClassDescriptorLength = (uint16_t)report_len;
 
 	if (*size > LIBUSB_DT_HID_SIZE)
@@ -3434,12 +3443,12 @@ static int _hid_get_descriptor(struct hid_device_priv* dev, HANDLE hid_handle, i
 		if (!_index)
 			return _hid_get_hid_descriptor(dev, data, size);
 		return LIBUSB_ERROR_INVALID_PARAM;
-	case LIBUSB_DT_REPORT:
+	case LIBUSB_DT_HID_REPORT:
 		usbi_dbg("LIBUSB_DT_REPORT");
 		if (!_index)
 			return _hid_get_report_descriptor(dev, data, size);
 		return LIBUSB_ERROR_INVALID_PARAM;
-	case LIBUSB_DT_PHYSICAL:
+	case LIBUSB_DT_HID_PHYSICAL:
 		usbi_dbg("LIBUSB_DT_PHYSICAL");
 		if (HidD_GetPhysicalDescriptor(hid_handle, data, (ULONG)*size))
 			return LIBUSB_COMPLETED;

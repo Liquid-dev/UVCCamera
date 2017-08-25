@@ -104,7 +104,9 @@ static const char* usbi_localized_errors[ARRAYSIZE(usbi_locale_supported)][LIBUS
 		"Mémoire insuffisante",
 		"Opération non supportée or non implémentée sur cette plateforme",
 		"Autre erreur",
-	}, { /* Russian (ru) */
+	}
+#if 0
+	, { /* Russian (ru) */
 		"Успех",
 		"Ошибка ввода/вывода",
 		"Неверный параметр",
@@ -120,6 +122,7 @@ static const char* usbi_localized_errors[ARRAYSIZE(usbi_locale_supported)][LIBUS
 		"Операция не поддерживается данной платформой",
 		"Неизвестная ошибка"
 	}
+#endif
 };
 
 /** \ingroup misc

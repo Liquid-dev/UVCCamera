@@ -864,10 +864,16 @@ void UVCPreview::do_capture_callback(JNIEnv *env, uvc_frame_t *frame) {
 					goto SKIP;
 				}
 			}
-			jobject buf = env->NewDirectByteBuffer(callback_frame->data, callbackPixelBytes);
-			env->CallVoidMethod(mFrameCallbackObj, iframecallback_fields.onFrame, buf);
-			env->ExceptionClear();
-			env->DeleteLocalRef(buf);
+			if (iframecallback_fields.onFrame != 0) {
+				jobject buf = env->NewDirectByteBuffer(callback_frame->data, callbackPixelBytes);
+				env->CallVoidMethod(mFrameCallbackObj, iframecallback_fields.onFrame, buf);
+				env->ExceptionClear();
+				env->DeleteLocalRef(buf);
+			} else {
+				LOGE("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+				LOGE("@@@@@@@@@@@@@@@@@@ jmethodID was NULL.");
+				LOGE("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			}
 		}
  SKIP:
 		recycle_frame(callback_frame);

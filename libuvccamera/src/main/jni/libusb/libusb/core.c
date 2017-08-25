@@ -1241,6 +1241,7 @@ int API_EXPORTED libusb_open(libusb_device *dev, libusb_device_handle **handle) 
 	return LIBUSB_SUCCESS;
 }
 
+#if defined(OS_ANDROID)
 int API_EXPORTED libusb_set_device_fd(libusb_device *dev, int fd) {
 
 	return usbi_backend->set_device_fd(dev, fd);
@@ -1261,6 +1262,7 @@ libusb_device * LIBUSB_CALL libusb_get_device_with_fd(libusb_context *ctx,
 
 	RET(device);
 }
+#endif
 
 /** \ingroup dev
  * Convenience function for finding a device with a particular

@@ -25,6 +25,7 @@
 #ifndef UTILBASE_H_
 #define UTILBASE_H_
 
+#if !defined(_MSC_VER)
 #include <jni.h>
 #ifdef __ANDROID__
 #include <android/log.h>
@@ -32,6 +33,7 @@
 #include <unistd.h>
 #include <libgen.h>
 #include "localdefines.h"
+#endif
 
 #define		SAFE_FREE(p)				{ if (p) { free((p)); (p) = NULL; } }
 #define		SAFE_DELETE(p)				{ if (p) { delete (p); (p) = NULL; } }
@@ -223,8 +225,10 @@
 			__FILE__ ":" LITERAL_TO_STRING(__LINE__)            \
 			" Should not be here.");
 
+#if defined(__ANDROID__)
 void setVM(JavaVM *);
 JavaVM *getVM();
 JNIEnv *getEnv();
+#endif
 
 #endif /* UTILBASE_H_ */

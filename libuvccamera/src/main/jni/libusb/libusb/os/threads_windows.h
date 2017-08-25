@@ -40,6 +40,7 @@ struct usbi_cond_t_ {
 };
 typedef struct usbi_cond_t_ usbi_cond_t;
 
+#if !defined(OS_WINDOWS)
 // We *were* getting timespec from pthread.h:
 #if (!defined(HAVE_STRUCT_TIMESPEC) && !defined(_TIMESPEC_DEFINED))
 #define HAVE_STRUCT_TIMESPEC 1
@@ -49,6 +50,7 @@ struct timespec {
 		long tv_nsec;
 };
 #endif /* HAVE_STRUCT_TIMESPEC | _TIMESPEC_DEFINED */
+#endif
 
 // We *were* getting ETIMEDOUT from pthread.h:
 #ifndef ETIMEDOUT

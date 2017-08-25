@@ -40,3 +40,5 @@
 #define HAVE_SIGNAL_H 1
 #define HAVE_SYS_TYPES_H 1
 #endif
+
+#define ACCESS_RAW_DESCRIPTORS 1

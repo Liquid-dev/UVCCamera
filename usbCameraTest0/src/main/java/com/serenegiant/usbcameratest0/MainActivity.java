@@ -149,11 +149,13 @@ public class MainActivity extends BaseActivity implements CameraDialog.CameraDia
 						camera.open(ctrlBlock);
 						if (DEBUG) Log.i(TAG, "supportedSize:" + camera.getSupportedSize());
 						try {
-							camera.setPreviewSize(UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT, UVCCamera.FRAME_FORMAT_MJPEG);
+							//camera.setPreviewSize(UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT, UVCCamera.FRAME_FORMAT_MJPEG);
+							camera.setPreviewSize(UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT, 1, 31, UVCCamera.FRAME_FORMAT_MJPEG, 1.0f);
 						} catch (final IllegalArgumentException e) {
 							try {
 								// fallback to YUV mode
-								camera.setPreviewSize(UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT, UVCCamera.DEFAULT_PREVIEW_MODE);
+								//camera.setPreviewSize(UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT, UVCCamera.DEFAULT_PREVIEW_MODE);
+								camera.setPreviewSize(UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT, 1, 31, UVCCamera.DEFAULT_PREVIEW_MODE, 1.0f);
 							} catch (final IllegalArgumentException e1) {
 								camera.destroy();
 								return;
@@ -168,6 +170,46 @@ public class MainActivity extends BaseActivity implements CameraDialog.CameraDia
 						}
 						synchronized (mSync) {
 							mUVCCamera = camera;
+
+							mUVCCamera.updateCameraParams();
+
+							boolean autoFocus = mUVCCamera.getAutoFocus();
+							int focus = mUVCCamera.getFocus();
+
+							// マニュアルフォーカス
+							mUVCCamera.setAutoFocus(false);
+							// 距離をmm単位で設定する
+							// https://int80k.com/libuvc/doc/group__ctrl.html#gada751891d787accec381a33c2789d3c9
+							mUVCCamera.setFocus(19);
+
+							boolean autoFocus2 = mUVCCamera.getAutoFocus();
+							int focus2 = mUVCCamera.getFocus();
+
+							int exposureMode = mUVCCamera.getExposureMode();
+							int exposure = mUVCCamera.getExposure();
+
+							// irisはサポートしていないのでMANUALなら1をAUTOなら8を設定すること
+							// https://int80k.com/libuvc/doc/group__ctrl.html#gaa583133ed035c141c42061d5c13a36bf
+							// UVC_AUTO_EXPOSURE_MODE_MANUAL (1) - manual exposure time, manual iris
+							// UVC_AUTO_EXPOSURE_MODE_AUTO (2) - auto exposure time, auto iris
+							// UVC_AUTO_EXPOSURE_MODE_SHUTTER_PRIORITY (4) - manual exposure time, auto iris
+							// UVC_AUTO_EXPOSURE_MODE_APERTURE_PRIORITY (8) - auto exposure time, manual iris
+							mUVCCamera.setExposureMode(1);
+
+							// 0.0001s/unitで設定する100なら10ms
+							// 1/30 : (1/30) * 10000 = 333
+							// 1/60 : (1/60) * 10000 = 166
+							// 1/125 : (1/125) * 10000 = 80
+							// 1/250 : (1/250) * 10000 = 40
+							// https://int80k.com/libuvc/doc/group__ctrl.html#ga5309474eaea2ebc22ffc74c64c7a4b59
+							mUVCCamera.setExposure(40);
+
+							int exposureMode2 = mUVCCamera.getExposureMode();
+							int exposure2 = mUVCCamera.getExposure();
+
+							boolean autoFocus3 = mUVCCamera.getAutoFocus();
+
+
 						}
 					}
 				}

@@ -452,6 +452,36 @@ public class UVCCamera {
     }
 
 //================================================================================
+	public synchronized void setExposureMode(final int mode) {
+		if (mNativePtr != 0) {
+			nativeSetExposureMode(mNativePtr, mode);
+		}
+	}
+
+	public synchronized int getExposureMode() {
+		int result = 0;
+		if (mNativePtr != 0) {
+			result = nativeGetExposureMode(mNativePtr);
+		}
+		return result;
+	}
+//================================================================================
+	public synchronized void setExposure(final int exposure) {
+		if (mNativePtr != 0) {
+			nativeSetExposure(mNativePtr, exposure);
+		}
+	}
+
+	public synchronized  int getExposure() {
+		int result = 0;
+		if (mNativePtr != 0) {
+			result = nativeGetExposure(mNativePtr);
+		}
+		return result;
+	}
+//================================================================================
+
+//================================================================================
 	public synchronized void setAutoFocus(final boolean autoFocus) {
     	if (mNativePtr != 0) {
     		nativeSetAutoFocus(mNativePtr, autoFocus);
@@ -922,6 +952,12 @@ public class UVCCamera {
 	    	    	nativeUpdateZoomLimit(mNativePtr);
 	    	    	nativeUpdateWhiteBlanceLimit(mNativePtr);
 	    	    	nativeUpdateFocusLimit(mNativePtr);
+
+					nativeUpdateFocusRelLimit(mNativePtr);
+					nativeUpdateAutoFocusLimit(mNativePtr);
+					nativeUpdateExposureModeLimit(mNativePtr);
+					nativeUpdateExposureLimit(mNativePtr);
+					nativeUpdateExposureRelLimit(mNativePtr);
     	    	}
     	    	if (DEBUG) {
 					dumpControls(mControlSupports);
