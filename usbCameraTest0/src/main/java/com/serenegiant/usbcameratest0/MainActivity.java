@@ -176,9 +176,9 @@ public class MainActivity extends BaseActivity implements CameraDialog.CameraDia
 							boolean autoFocus = mUVCCamera.getAutoFocus();
 							int focus = mUVCCamera.getFocus();
 
-							// ƒ}ƒjƒ…ƒAƒ‹ƒtƒH[ƒJƒX
+							// ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹
 							mUVCCamera.setAutoFocus(false);
-							// ‹——£‚ğmm’PˆÊ‚Åİ’è‚·‚é
+							// è·é›¢ã‚’mmå˜ä½ã§è¨­å®šã™ã‚‹
 							// https://int80k.com/libuvc/doc/group__ctrl.html#gada751891d787accec381a33c2789d3c9
 							mUVCCamera.setFocus(19);
 
@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity implements CameraDialog.CameraDia
 							int exposureMode = mUVCCamera.getExposureMode();
 							int exposure = mUVCCamera.getExposure();
 
-							// iris‚ÍƒTƒ|[ƒg‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅMANUAL‚È‚ç1‚ğAUTO‚È‚ç8‚ğİ’è‚·‚é‚±‚Æ
+							// irisã¯ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ãªã„ã®ã§MANUALãªã‚‰1ã‚’AUTOãªã‚‰8ã‚’è¨­å®šã™ã‚‹ã“ã¨
 							// https://int80k.com/libuvc/doc/group__ctrl.html#gaa583133ed035c141c42061d5c13a36bf
 							// UVC_AUTO_EXPOSURE_MODE_MANUAL (1) - manual exposure time, manual iris
 							// UVC_AUTO_EXPOSURE_MODE_AUTO (2) - auto exposure time, auto iris
@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity implements CameraDialog.CameraDia
 							// UVC_AUTO_EXPOSURE_MODE_APERTURE_PRIORITY (8) - auto exposure time, manual iris
 							mUVCCamera.setExposureMode(1);
 
-							// 0.0001s/unit‚Åİ’è‚·‚é100‚È‚ç10ms
+							// 0.0001s/unitã§è¨­å®šã™ã‚‹100ãªã‚‰10ms
 							// 1/30 : (1/30) * 10000 = 333
 							// 1/60 : (1/60) * 10000 = 166
 							// 1/125 : (1/125) * 10000 = 80

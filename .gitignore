@@ -70,3 +70,7 @@ profiles_settings.xml
 libuvccamera/src/main/libs
 .idea/copyright
 .idea/scopes
+
+libuvccamera/src/main/jni/libusb/Win32/
+libuvccamera/src/main/jni/libusb/msvc/.vs/
+libuvccamera/src/main/jni/libusb/x64/
